@@ -37,6 +37,24 @@ class UserResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+    def put(self, user_id):
+        abort_if_user_not_found(user_id)
+        session = db_session.create_session()
+        user = session.query(User).get(user_id)
+        args = parser.parse_args()
+        user.name = args['name'] if args['name'] is not None else user.name
+        user.surname = args['surname'] if args['surname'] is not None else user.surname
+        user.age = args['age'] if args['age'] is not None else user.age
+        user.email = args['email'] if args['email'] is not None else user.email
+        user.position = args['position'] if args['position'] is not None else user.position
+        user.speciality = args['speciality'] if args['speciality'] is not None else user.speciality
+        user.address = args['address'] if args['address'] is not None else user.address
+        user.email = args['email'] if args['email'] is not None else user.email
+        if args['password'] is not None:
+            user.set_password(args['password'])
+        session.commit()
+        return jsonify({'success': 'OK'})
+
 
 class UserListResource(Resource):
     def get(self):

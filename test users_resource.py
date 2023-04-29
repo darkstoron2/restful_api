@@ -1,10 +1,9 @@
-from requests import get, post, delete
+from requests import get, post, delete, put
 from data.user_resource import UserResource, UserListResource
 
 
 def test():
     # Правильные запросы
-    """
     print(get('http://localhost:5000/api/v2/user').json())
 
     print(get('http://localhost:5000/api/v2/user/1').json())
@@ -21,7 +20,12 @@ def test():
 
     print(delete('http://localhost:5000/api/v2/user/6').json())
     print(get('http://localhost:5000/api/v2/user').json())
-    """
+
+    print(put('http://localhost:5000/api/v2/user/1', json={
+        'name': 'Marlow'
+    }).json())
+    print(get('http://localhost:5000/api/v2/user/1').json())
+
     print(get('http://localhost:5000/api/v2/user/999'))  # Нет такого пользователя
     print(post('http://localhost:5000/api/v2/user', json={}).json())  # Нет ключей
     print(delete('http://localhost:5000/api/v2/user/999'))  # Нет такого пользователя
